@@ -19,3 +19,4 @@ class Solution(object):
                 result += check_char
 
         return result
+        
