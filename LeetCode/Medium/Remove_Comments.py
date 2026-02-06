@@ -2,33 +2,38 @@ class Solution(object):
     def removeComments(self, source):
         Block_comment = False
         Result = []
+        line_code = []
         code = ""
 
-        for line in source:
-            i = 0
-            if not Block_comment:
-                code = ""
+        for i in range(len(source)):
 
-            while i < len(line):
-                if Block_comment:
-                    if i + 1 < len(line) and line[i] == "*" and line[i + 1] == "/":
-                        Block_comment = False
-                        i += 2
-                    else:
-                        i += 1
-                else:
-                    if i + 1 < len(line) and line[i] == "/" and line[i + 1] == "/":
+            j = 0
+            if not Block_comment:
+                line_code = []
+
+            while j < len(source[i]):
+                if not Block_comment:
+                    if j + 1 < len(source[i]) and source[i][j] == "/" and source[i][j + 1] == "/":
                         break
 
-                    elif i + 1 < len(line) and line[i] == "/" and line[i + 1] == "*":
+                    elif j + 1 < len(source[i]) and source[i][j] == "/" and source[i][j + 1] == "*":
                         Block_comment = True
-                        i += 2
-
+                        j += 2
                     else:
-                        code += line[i]
-                        i += 1
+                        line_code.append(source[i][j])
+                        j += 1
+                else:
+                    if j + 1 < len(source[i]) and source[i][j] == "*" and source[i][j + 1] == "/":
+                        Block_comment = False
+                        j += 2
+                    else:
+                        j += 1
 
-            if not Block_comment and code:
-                Result.append(code)
+            if not Block_comment:
+                code = "".join(line_code)
+                if code != "":
+                    Result.append(code)
+                elif code == "" and any(c == " " for c in line_code):
+                    Result.append(code)
 
         return Result
