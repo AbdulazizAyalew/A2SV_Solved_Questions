@@ -1,0 +1,29 @@
+class Solution:
+    def closeStrings(self, word1: str, word2: str) -> bool:
+        if len(word1) != len(word2):
+            return False
+        
+        count_w1 = Counter(word1)
+        count_w2 = Counter(word2)
+        Needs = defaultdict(int)
+        set_w = set()
+
+        for c in count_w1:
+            if count_w1[c] != count_w2[c]:
+                Needs[count_w1[c]] += 1
+                set_w.add(c)
+    
+        
+        for w in set_w:
+            if count_w2[w] in Needs:
+                Needs[count_w2[w]] -= 1
+        
+        for n in Needs:
+            if Needs[n] != 0:
+                return False
+
+        return True
+        
+
+
+        
