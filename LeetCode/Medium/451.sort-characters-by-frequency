@@ -1,0 +1,22 @@
+class Solution:
+    def frequencySort(self, s: str) -> str:
+        count_s = Counter(s)
+        
+        freq_list = []
+        freq_val = {}
+        Result = []
+
+        for c in count_s:
+            if count_s[c] not in freq_val:
+                freq_list.append(count_s[c])
+                freq_val[count_s[c]] = [c * count_s[c]]
+            else:
+                freq_val[count_s[c]].append(c * count_s[c])
+        
+        freq_list.sort(reverse = True)
+        for freq in freq_list:
+            Result.append("".join(freq_val[freq]))
+        
+        return "".join(Result)
+
+            
