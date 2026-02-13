@@ -1,0 +1,26 @@
+class Solution:
+    def wordPattern(self, pattern: str, s: str) -> bool:
+        words = list(s.split())
+        if len(set(words)) != len(set(pattern)):
+            return False
+        
+        if len(words) != len(pattern):
+            return False
+            
+        
+        mapped_words = set()
+        mapping = {}
+        for i in range(len(pattern)):
+            if pattern[i] not in mapping and words[i] not in mapped_words:
+                mapping[pattern[i]] = words[i]
+                mapped_words.add(words[i])
+            elif pattern[i] in mapping:
+                if mapping[pattern[i]] != words[i]:
+                    return False
+            elif words[i] not in mapping:
+                return False
+        return True
+            
+
+                
+        
