@@ -1,0 +1,28 @@
+class Solution:
+    def findCommonResponse(self, responses: List[List[str]]) -> str:
+        Response_occr = {}
+        for response in responses:
+            set_r = set()
+            for r in response:
+                if r in Response_occr:
+                    if r not in set_r:
+                        Response_occr[r] += 1
+                        set_r.add(r)
+                else:
+                    Response_occr[r] = 1
+                    set_r.add(r)
+        
+        word = "zzzzzz"
+        max_occr = 0
+        for res in Response_occr:
+            if Response_occr[res] > max_occr:
+                max_occr = Response_occr[res]
+                word = res
+            elif Response_occr[res] == max_occr:
+                if word > res:
+                    max_occr = Response_occr[res]
+                    word = res
+        
+        return word
+            
+

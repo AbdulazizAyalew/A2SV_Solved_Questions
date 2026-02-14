@@ -1,0 +1,20 @@
+class Solution:
+    def findValidPair(self, s: str) -> str:
+        Result = []
+        count_s = Counter(s)
+
+        for ch in s:
+            if count_s[ch] == int(ch):
+                if Result == [ch]:
+                    Result = []
+                Result.append(ch)
+            else:
+                Result = []
+            
+            if len(Result) == 2:
+                break
+        else:
+            return ""
+        
+        return "".join(Result)
+            
