@@ -1,0 +1,11 @@
+n = int(input())
+k = 1
+contests = list(map(int,input().split()))
+
+contests.sort()
+for con in contests:
+    if k <= con:
+        k += 1
+print(k-1)
+
+
