@@ -1,0 +1,26 @@
+class NumMatrix:
+
+    def __init__(self, matrix):
+        if not matrix:
+            return
+        
+        m, n = len(matrix), len(matrix[0])
+        
+        self.pref = [[0] * (n + 1) for _ in range(m + 1)]
+
+        for r in range(1, m + 1):
+            for c in range(1, n + 1):
+                self.pref[r][c] = (
+                    matrix[r-1][c-1]
+                    + self.pref[r-1][c]
+                    + self.pref[r][c-1]
+                    - self.pref[r-1][c-1]
+                )
+
+    def sumRegion(self, row1, col1, row2, col2):
+        return (
+            self.pref[row2+1][col2+1]
+            - self.pref[row1][col2+1]
+            - self.pref[row2+1][col1]
+            + self.pref[row1][col1]
+        )
