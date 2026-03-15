@@ -4,5 +4,5 @@ class Solution:
             return []
         else:
             middle = int(num / 3)
-            return [middle - 1, middle , middle+1]
+            return [middle - 1, middle , middle+1] 
         
