@@ -1,20 +1,24 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         ans = []
-        def backtracker(visited,lis):
-            if len(lis) == len(nums):
-                ans.append(lis)
+        visited = [False] * len(nums)
+
+        def backtracker(perm):
+            if len(perm) == len(nums):
+                ans.append(perm[:])
                 return
 
             for j in range(0,len(nums)):
-                if j in visited:
+                if visited[j]:
                     continue
-                lis.append(nums[j])
-                visited.append(j)
-                backtracker(visited[:],lis[:])
-                lis.pop()
-                visited.pop()
+                perm.append(nums[j])
+                visited[j] = True
+
+                backtracker(perm)
+
+                perm.pop()
+                visited[j] = False
         
 
-        backtracker([],[])
+        backtracker([])
         return ans
