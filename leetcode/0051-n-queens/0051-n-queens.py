@@ -1,8 +1,11 @@
 class Solution:
     def solveNQueens(self, n: int) -> List[List[str]]:
         ans = []
+        cols = set()
+        dig_1 = set()
+        dig_2 = set()
 
-        def backtrack(cols,dig_1,dig_2, arr, row):
+        def backtrack(arr, row):
 
             if len(arr) == n:
                 ans.append(list(arr)) 
@@ -14,20 +17,20 @@ class Solution:
                 if i in cols or diag1 in dig_1 or diag2 in dig_2:
                     continue
                 else:
-                    col = cols.copy()
-                    col.add(i)
-                    d_1 = dig_1.copy()
-                    d_1.add(diag1)
-                    d_2 = dig_2.copy()
-                    d_2.add(diag2)
+                    cols.add(i)
+                    dig_1.add(diag1)
+                    dig_2.add(diag2)
                     
                     row_str = ["." for _ in range(n)]
                     row_str[i] = "Q"
                     
                     arr.append("".join(row_str))
-                    backtrack(col,d_1,d_2, arr, row + 1)
+                    backtrack(arr, row + 1)
                     arr.pop()
+                    cols.remove(i)
+                    dig_1.remove(diag1)
+                    dig_2.remove(diag2)
             return
         
-        backtrack(set(),set(),set() ,[], 0)
+        backtrack([], 0)
         return ans
