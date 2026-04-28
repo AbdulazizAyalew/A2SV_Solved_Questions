@@ -1,27 +1,28 @@
 class Solution:
     def maximumDetonation(self, bombs: List[List[int]]) -> int:
-        
-        
 
-        def checkInside(d,b):
-            distance = sqrt((d[0]-b[0]) ** 2 + (d[1]-b[1]) ** 2)
-            if 0 <= distance <= d[2]:
-                return True
+        graph = []
+        for i in range(len(bombs)):
+            x,y,z = bombs[i]
+            graph.append([])
+            for j in range(len(bombs)):
+                if i != j:
+                    distance = (x-bombs[j][0]) ** 2 + (y-bombs[j][1]) ** 2
+                    if z**2 >= distance:
+                        graph[i].append(j)
 
-        
-
-        def dfs(b,checked,i):
-            checked[i] = 1
-            for i in range(len(bombs)):
-                if checkInside(b,bombs[i]) and checked[i] != 1:
-                    dfs(bombs[i],checked,i)
+        def dfs(i,visited):
+            visited.add(i)
+            for n in graph[i]:
+                if n not in visited:
+                    dfs(n,visited)
 
         maxx = 0
 
         for i in range(len(bombs)):
-            checked = [0 for i in range(len(bombs))]
-            dfs(bombs[i],checked,i)
+            visited = set()
+            dfs(i,visited)
 
-            maxx = max(maxx,checked.count(1))
+            maxx = max(maxx,len(visited))
         
         return maxx
